@@ -1,0 +1,6 @@
+beautifulsoup4
+black
+urllib3
+pycodestyle
+autopep8
+pylint
