@@ -13,6 +13,15 @@ OUTPUT_FILE = "quotes.json"
 http = urllib3.PoolManager()
 
 
+def _get_quote(stripped_strings):
+    quote_parts = []
+    for x in stripped_strings:
+        quote_parts.append(x)
+        if "”" in x:
+            break
+    return "\n".join(quote_parts)
+
+
 def _query_quotes(page_param):
     _quotes = []
     _authors = []
@@ -22,7 +31,7 @@ def _query_quotes(page_param):
     soup = BeautifulSoup(response.data, features="html.parser")
 
     quotes_blocks = soup.findAll("div", {"class": "quoteText"})
-    _quotes += [next(x.stripped_strings) for x in quotes_blocks]
+    _quotes += [_get_quote(x.stripped_strings) for x in quotes_blocks]
 
     author_blocks = soup.findAll("span", {"class": "authorOrTitle"})
     _authors += [next(x.stripped_strings).replace(",", "") for x in author_blocks]
